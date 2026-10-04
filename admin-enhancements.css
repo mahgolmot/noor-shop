@@ -1,0 +1,29 @@
+.orders-page .order-table-card,.users-card{width:100%;max-height:none;overflow:auto}
+.orders-page table{min-width:980px}
+.orders-page th,.orders-page td{padding:18px 20px;white-space:nowrap}
+.print-orders{display:block;margin:18px 0 0 auto}
+.role-control{display:flex;align-items:center;gap:8px}
+.role-control select{min-width:100px;padding:8px;border:1px solid #d7d7d4;background:#fff}
+.role-control button,.settings-actions button{border:0;background:#30384f;color:#fff;padding:9px 13px}
+.settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.settings-card{min-height:0!important;border-top:4px solid var(--accent,#cfe8ff)}
+.settings-card.wide{grid-column:1/-1}
+.settings-card h3{font-size:17px;margin:0 0 5px}
+.settings-card>p{margin:0 0 20px;line-height:1.9}
+.settings-card form{display:grid;gap:14px}
+.settings-card label{display:grid;gap:7px;font-size:9px}
+.settings-card input,.settings-card select{width:100%;padding:12px;border:1px solid #d6d6d3;background:#fff}
+.settings-card small{color:#777;line-height:1.8}
+.settings-card .toggle-row{display:flex;align-items:center;gap:8px}
+.settings-card .toggle-row input{width:auto}
+.settings-actions{display:flex;gap:8px;align-items:center;margin-top:4px}
+.settings-actions .test-button{background:#eef0f3;color:#30384f}
+.config-state{display:inline-flex;padding:5px 9px;border-radius:20px;background:#fff0b2;font-size:8px}
+.config-state.ready{background:#d9f1e2}
+.coupon-list{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:15px}
+.coupon-list p{background:#faf9f6;padding:10px;margin:0!important}
+@media(max-width:900px){.settings-grid{grid-template-columns:1fr}.settings-card.wide{grid-column:auto}.users-card table{min-width:900px}}
+@media print{
+ body{background:#fff}.sidebar,header,.page:not(.orders-page),.orders-page .page-title span,.order-tabs,.print-orders,.admin-toast{display:none!important}
+ main{margin:0}.content{padding:0;max-width:none}.page.orders-page{display:block!important}.orders-page .page-title{margin:0 0 18px}.orders-page .order-table-card{overflow:visible}.orders-page table{min-width:0}.orders-page th,.orders-page td{padding:10px 8px;font-size:9px}.order-status{border:0;appearance:none;padding:0}
+}

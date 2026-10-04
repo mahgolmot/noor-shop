@@ -1,0 +1,23 @@
+/* Hero media refinements. Loaded separately to avoid stale host/browser caches. */
+.hero-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(.94) contrast(1.035) saturate(.96);
+}
+
+@media (max-width: 800px) {
+  .hero-media video {
+    object-position: 50% center;
+    filter: brightness(.9) contrast(1.045) saturate(.94);
+  }
+
+  .hero .t2 {
+    left: 7%;
+    right: auto;
+    top: 31%;
+    bottom: auto;
+  }
+}

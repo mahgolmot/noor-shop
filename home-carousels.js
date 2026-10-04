@@ -1,0 +1,23 @@
+(function(){
+  const catalog=document.querySelector('.catalog');
+  if(!catalog||document.querySelector('.home-showcase'))return;
+  const categoryNames={women:'زنانه',men:'مردانه',unisex:'یونی‌سکس',niche:'نیش',ring:'زنانه',necklace:'مردانه',bracelet:'یونی‌سکس',earring:'نیش'};
+  const fa=n=>new Intl.NumberFormat('fa-IR').format(Number(n)||0);
+  const safe=value=>String(value==null?'':value).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const productCard=p=>`<article class="slide-product"><button type="button" class="product-favorite" data-product-favorite="${Number(p.id)}" aria-label="افزودن به علاقه‌مندی‌ها" aria-pressed="false">♡</button><a href="product.html?id=${Number(p.id)}"><div class="slide-product-media">${p.image_path?`<img src="${safe(p.image_path)}" alt="${safe(p.name)}" loading="lazy">`:'<span class="slide-placeholder">bilumiere</span>'}${Number(p.stock)>0?'<i>موجود</i>':'<i class="soldout">ناموجود</i>'}</div><div class="slide-product-info"><span>${safe(categoryNames[p.category]||'عطر')}</span><h3>${safe(p.name)}</h3><b>${fa(p.price)} <small>تومان</small></b></div></a></article>`;
+  const rail=(id,title,kicker,allLink=true)=>`<section class="home-carousel" aria-labelledby="${id}-title"><div class="section-heading"><div><span>${kicker}</span><h2 id="${id}-title">${title}</h2></div><div class="carousel-actions">${allLink?'<a href="shop.html">دیدن همه</a>':''}<button type="button" data-slide="next" aria-label="بعدی">←</button><button type="button" data-slide="prev" aria-label="قبلی">→</button></div></div><div class="carousel-rail" id="${id}"></div></section>`;
+  const markup=`<div class="home-showcase">
+    ${rail('latest-products','جدیدترین رایحه‌ها','NEW ARRIVALS')}
+    ${rail('best-products','عطرهای پرفروش','BEST SELLERS')}
+    ${rail('category-cards','رایحه برای هر شخصیت','SHOP BY CATEGORY',false)}
+    ${rail('brand-cards','خانواده‌های بویایی','OLFACTIVE FAMILIES',false)}
+    <section class="trust-section"><div class="trust-visual"><img src="assets/perfume-story-v2.webp" alt="بسته‌بندی و خدمات bilumiere" loading="lazy"><span>خریدی آرام و مطمئن</span></div><div class="trust-content"><span>THE bilumiere PROMISE</span><h2>از انتخاب تا رسیدن به دست تو، کنارت هستیم.</h2><div class="trust-grid"><article><b>ارسال سریع</b><p>بسته‌بندی امن و ارسال سریع سفارش‌ها</p></article><article><b>پشتیبانی ۲۴ ساعته</b><p>پاسخ‌گویی پیش و پس از خرید</p></article><article><b>ضمانت اصالت</b><p>تضمین کیفیت و اصالت تمام عطرها</p></article><article><b>۷ روز بازگشت</b><p>فرصت بررسی و بازگشت طبق قوانین</p></article></div></div></section>
+  </div>`;
+  catalog.insertAdjacentHTML('beforebegin',markup);
+  const categoryData=[['women','زنانه'],['men','مردانه'],['unisex','یونی‌سکس'],['niche','نیش']];
+  document.querySelector('#category-cards').innerHTML=categoryData.map(([key,label],i)=>`<a class="image-card category-card card-pos-${i}" href="shop.html?category=${key}"><img src="assets/category-${key}-v2.webp" alt="${label}" loading="lazy"><span><small>دسته‌بندی</small><b>${label}</b><em>مشاهده عطرها ←</em></span></a>`).join('');
+  const brands=[['FLORAL','لطافت گل‌های سفید و رز'],['WOODY','عمق چوب، وتیور و عنبر'],['ORIENTAL','گرمای ادویه و وانیل']];
+  document.querySelector('#brand-cards').innerHTML=brands.map(([name,desc],i)=>`<a class="image-card brand-card card-pos-${i}" href="shop.html"><img src="assets/olfactive-${name.toLowerCase()}-v2.webp" alt="${name}" loading="lazy"><span><small>خانواده بویایی</small><b>${name}</b><em>${desc}</em></span></a>`).join('');
+  document.querySelectorAll('.home-carousel').forEach(section=>section.addEventListener('click',e=>{const button=e.target.closest('[data-slide]');if(!button)return;const track=section.querySelector('.carousel-rail');const amount=Math.min(track.clientWidth*.82,440);track.scrollBy({left:button.dataset.slide==='next'?-amount:amount,behavior:'smooth'});}));
+  fetch('api/products').then(r=>r.json()).then(data=>{if(!data.ok)throw new Error();const list=data.products||[];const newest=[...list].sort((a,b)=>Number(b.id)-Number(a.id)).slice(0,10);const best=[...list].sort((a,b)=>(Number(b.sales_count)-Number(a.sales_count))||(Number(b.id)-Number(a.id))).slice(0,10);document.querySelector('#latest-products').innerHTML=newest.map(productCard).join('')||'<p class="empty-rail">هنوز عطری ثبت نشده است.</p>';document.querySelector('#best-products').innerHTML=best.map(productCard).join('')||'<p class="empty-rail">هنوز عطری ثبت نشده است.</p>';}).catch(()=>{document.querySelectorAll('#latest-products,#best-products').forEach(x=>x.innerHTML='<p class="empty-rail">دریافت محصولات ناموفق بود.</p>');});
+})();

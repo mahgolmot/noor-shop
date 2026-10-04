@@ -1,0 +1,36 @@
+.product-media,
+.slide-product-media,
+.shop-card .card-image {
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #eee9df;
+}
+
+.product-photo,
+.product-media > img,
+.slide-product-media > img,
+.shop-card .card-image > img,
+.gallery-stage > img,
+.related-card img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+.category-card img {
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+@media (max-width: 700px) {
+  .slide-product {
+    flex: 0 0 min(72vw, 270px) !important;
+    width: min(72vw, 270px) !important;
+  }
+}

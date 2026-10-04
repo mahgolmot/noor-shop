@@ -1,0 +1,7 @@
+RewriteEngine On
+<FilesMatch "^(config\.local\.php|\.installed)$">
+Require all denied
+</FilesMatch>
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
